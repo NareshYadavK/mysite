@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- saved from url=(0012)about:srcdoc -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+	html {
+		overflow: hidden;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+ 	}
+
+ 	iframe {
+ 		max-width: 100%;
+ 	}
+</style>
+</head>
+	<body>  <title>GSWSReg Form</title> <form id="gswsForm">
+        <!-- Input fields -->
+        <label for="SRCODE">SRCODE:</label><br>
+        <input type="text" id="SRCODE" name="SRCODE" value="1211"><br>
+
+        <label for="DOCNO">DOCNO:</label><br>
+        <input type="text" id="DOCNO" name="DOCNO" value="524"><br>
+
+        <label for="RYEAR">RYEAR:</label><br>
+        <input type="text" id="RYEAR" name="RYEAR" value="2016"><br>
+
+        <!-- Submit button -->
+        <input type="submit" value="Submit">
+
+        <label for="BOOKNO"></label>
+        <input type="hidden" id="BOOKNO" name="BOOKNO" value="1"><br>
+
+        <label for="USERNAME"></label>
+        <input type="hidden" id="USERNAME" name="USERNAME" value="gsws_igrs"><br>
+
+        <label for="PASSWORD"></label>
+        <input type="hidden" id="PASSWORD" name="PASSWORD" value="GswsIgrs@22"><br>
+
+        
+    </form> <script>
+        document.getElementById("gswsForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            const jsonObject = {};
+            
+            formData.forEach((value, key) => {
+                jsonObject[key] = value;
+            });
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://igrs.ap.gov.in/GSWS/restAdapter/GSWSReg", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Handle the server's response here
+                    console.log(xhr.responseText);
+                }
+            };
+            
+            xhr.send(JSON.stringify(jsonObject));
+        });
+    </script>
+</body></html>
